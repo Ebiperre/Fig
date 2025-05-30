@@ -79,10 +79,10 @@
 
         .slide-container {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: clamp(6rem, 10vh, 8rem) 1rem clamp(7rem, 12vh, 9rem);
+            padding: 1rem;
             position: relative;
         }
 
@@ -99,7 +99,9 @@
             transform: translateY(30px) scale(0.95);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
-            min-height: auto;
+            margin: 6rem 0; /* Top and bottom margin for navigation space */
+            max-height: calc(100vh - 12rem); /* Prevent overflow */
+            overflow-y: auto; /* Allow scrolling if content is too tall */
         }
 
         .slide.active {
@@ -514,8 +516,12 @@
         /* Responsive breakpoints */
         @media (min-width: 768px) {
             .slide-container {
-                padding: clamp(7rem, 12vh, 10rem) 2rem clamp(8rem, 14vh, 12rem);
-                align-items: center;
+                padding: 2rem;
+            }
+
+            .slide {
+                margin: 8rem 0; /* More space on larger screens */
+                max-height: calc(100vh - 16rem);
             }
 
             .product-showcase {
@@ -593,13 +599,14 @@
         /* Landscape mobile optimization */
         @media (max-height: 600px) and (orientation: landscape) {
             .slide-container {
-                min-height: auto;
-                padding: 1rem 1rem 6rem;
-                align-items: flex-start;
+                min-height: 100vh;
+                padding: 1rem;
             }
 
             .slide {
                 padding: clamp(1.5rem, 4vw, 2rem);
+                margin: 4rem 0;
+                max-height: calc(100vh - 8rem);
             }
 
             .launch-title {
@@ -618,13 +625,19 @@
 
         /* Portrait mobile optimization */
         @media (max-width: 480px) {
-            .slide-container {
-                padding: 5rem 1rem 7rem;
-                align-items: flex-start;
+            .slide {
+                margin: 5rem 0;
+                max-height: calc(100vh - 10rem);
+                padding: clamp(1.5rem, 4vw, 2rem);
             }
             
-            .slide {
-                padding: clamp(1.5rem, 4vw, 2rem);
+            .navigation {
+                bottom: 1rem;
+            }
+            
+            .slide-counter {
+                top: 1rem;
+                right: 1rem;
             }
         }
 
