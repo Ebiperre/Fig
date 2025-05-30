@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figours Digital Fusion Launch - The Nexus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #EFB13F;
+            --color-primary-dark: #d9a037;
+            --color-secondary: #3B484D;
+            --color-accent: #6366F1;
+            --color-background: #0F1419;
+            --color-surface: #1A1F2E;
+            --color-surface-light: #202837;
+            --color-text: #F3F4F6;
+            --color-text-secondary: #9CA3AF;
+            --gradient-primary: linear-gradient(135deg, #EFB13F 0%, #F59E0B 100%);
+            --gradient-dark: linear-gradient(135deg, #1A1F2E 0%, #0F1419 100%);
+            --gradient-accent: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .bg-animation::before,
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-animation::before {
+            width: 600px;
+            height: 600px;
+            background: var(--gradient-primary);
+            top: -200px;
+            right: -200px;
+        }
+
+        .bg-animation::after {
+            width: 800px;
+            height: 800px;
+            background: var(--gradient-accent);
+            bottom: -300px;
+            left: -300px;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -50px) scale(1.1); }
+        }
+
+        .slide-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .slide {
+            background: var(--gradient-dark);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            padding: 4rem;
+            width: 90%;
+            max-width: 1200px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .slide.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .launch-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: var(--color-text-secondary);
+            text-align: center;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .divider {
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-primary);
+            margin: 2rem auto;
+            border-radius: 2px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scaleX(1); }
+            50% { transform: scaleX(1.2); }
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: var(--color-surface);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(239, 177, 63, 0.2);
+            border-color: var(--color-primary);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .feature-description {
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+        }
+
+        .product-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+            align-items: center;
+        }
+
+        .product-info {
+            animation: slideInLeft 0.8s ease;
+        }
+
+        .product-visual {
+            position: relative;
+            animation: slideInRight 0.8s ease;
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .product-badge {
+            display: inline-block;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .product-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .product-description {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .product-features {
+            list-style: none;
+        }
+
+        .product-features li {
+            padding: 0.8rem 0;
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            color: var(--color-primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .device-mockup {
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            background: var(--color-surface);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .device-screen {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: var(--gradient-dark);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .venue-details {
+            background: var(--color-surface);
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .venue-details::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+            background: rgba(26, 31, 46, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            color: var(--color-background);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .nav-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(239, 177, 63, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            background: var(--color-surface);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(26, 31, 46, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .slide-progress {
+            width: 50px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-left: 1rem;
+        }
+
+        .slide-progress-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: width 0.5s ease;
+        }
+
+        .highlight {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+                    .gallery-item {
+                position: relative;
+                overflow: hidden;
+                transition: transform 0.3s ease;
+            }
+
+            .gallery-item:hover {
+                transform: scale(1.05);
+            }
+
+            .gallery-placeholder {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--color-surface);
+                color: var(--color-text-secondary);
+                font-size: 0.9rem;
+                text-align: center;
+            }
+
+            /* Add this for when you add actual images */
+            .gallery-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .timeline-item {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .timeline-item:hover {
+                transform: translateX(10px);
+                box-shadow: 0 5px 15px rgba(239, 177, 63, 0.1);
+            }
+            .slide {
+                padding: 2rem;
+            }
+
+            .launch-title {
+                font-size: 2.5rem;
+            }
+
+            .product-showcase {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .device-mockup {
+                max-width: 300px;
+                height: 400px;
+                margin: 0 auto;
+            }
+        
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">7</span>
+        <div class="slide-progress">
+            <div class="slide-progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Slide 1: Title -->
+    <div class="slide-container">
+        <div class="slide active">
+            <div class="slide-header">
+                <h1 class="launch-title">FIGOURS DIGITAL FUSION 2025</h1>
+                <p class="tagline">
+                    Where Web Meets Mobile - Seamless Payments, Limitless Possibilities
+                </p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="venue-details">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">The Nexus Platform Launch</h2>
+                <p style="font-size: 1.1rem; color: var(--color-text-secondary);">
+                    Join us for an exclusive evening unveiling the future of digital payments. 
+                    Experience the convergence of cutting-edge technology and financial innovation.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3 class="feature-title">Friday, August 8th, 2025</h3>
+                    <p class="feature-description">Mark your calendar for this transformative event</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏛️</div>
+                    <h3 class="feature-title">Imperial Hall</h3>
+                    <p class="feature-description">An evening of elegance and innovation</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎩</div>
+                    <h3 class="feature-title">All Black Smart Casual</h3>
+                    <p class="feature-description">Dress code for 100 VIP guests</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Figours Web Platform -->
+    <div class="slide-container">
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="launch-title">FIGOURS WEB PLATFORM</h2>
+                <p class="tagline">Your Complete Financial Command Center</p>
+            </div>
+
+            <div class="product-showcase">
+                <div class="product-info">
+                    <span class="product-badge">Web Application</span>
+                    <h3 class="product-title">Unified Payment Suite</h3>
+                    <p class="product-description">
+                        A fully integrated platform empowering businesses of all sizes with powerful tools 
+                        for seamless payment processing, multi-currency transactions, and comprehensive financial management.
+                    </p>
+                    <ul class="product-features">
+                        <li>Multi-currency payment processing</li>
+                        <li>Merchant & E-commerce gateway</li>
+                        <li>Digital accounts in multiple currencies</li>
+                        <li>Bills and airtime payments</li>
+                        <li>Real-time analytics dashboard</li>
+                        <li>Enterprise-grade security</li>
+                    </ul>
+                </div>
+                <div class="product-visual">
+                    <div class="device-mockup">
+                        <div class="device-screen">
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">💼</div>
+                                <p>Figours Web Dashboard</p>
+                                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Coming Soon</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: XBanqer Mobile App -->
+    <div class="slide-container">
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="launch-title">FIGOURS MOBILE APP</h2>
+                <p class="tagline">Banking Beyond Borders</p>
+            </div>
+
+            <div class="product-showcase">
+                <div class="product-visual">
+                    <div class="device-mockup" style="border-radius: 40px; max-width: 300px;">
+                        <div class="device-screen">
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+                                <p>Figours Mobile</p>
+                                <p style="font-size: 0.8rem; margin-top: 0.5rem;">iOS & Android</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-badge">Mobile Application</span>
+                    <h3 class="product-title">Your Global Financial Hub</h3>
+                    <p class="product-description">
+                        Experience borderless banking with Figours revolutionary mobile app. 
+                        Manage multi-currency accounts, make instant transfers, and access your finances anywhere in the world.
+                    </p>
+                    <ul class="product-features">
+                        <li>Multi-currency accounts management</li>
+                        <li>Market-leading exchange rates</li>
+                        <li>Borderless instant transfers</li>
+                        <li>Digital payment cards</li>
+                        <li>QR code & payment links</li>
+                        <li>Invoice management system</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Integration Features -->
+    <div class="slide-container">
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="launch-title">SEAMLESS INTEGRATION</h2>
+                <p class="tagline">One Ecosystem, Infinite Possibilities</p>
+            </div>
+
+            <div class="venue-details" style="text-align: center; margin-bottom: 3rem;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">The Power of Convergence</h3>
+                <p style="font-size: 1.1rem; color: var(--color-text-secondary);">
+                    Experience the synergy of <span class="highlight">Figours Innovation</span> and <span class="highlight">Figours Inc.</span> 
+                    working together to create a comprehensive financial ecosystem.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Real-time Sync</h3>
+                    <p class="feature-description">Instant synchronization between web and mobile platforms</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">Global Reach</h3>
+                    <p class="feature-description">Process payments in 150+ countries with local currency support</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3 class="feature-title">Unified Security</h3>
+                    <p class="feature-description">Bank-grade encryption across all platforms</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Comprehensive Analytics</h3>
+                    <p class="feature-description">360° view of your financial operations</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Instant Processing</h3>
+                    <p class="feature-description">Lightning-fast transactions with real-time notifications</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3 class="feature-title">API Integration</h3>
+                    <p class="feature-description">Seamlessly connect with your existing business tools</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Venue Gallery -->
+    <div class="slide-container">
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="launch-title">IMPERIAL HALL</h2>
+                <p class="tagline">A Venue Worthy of Innovation</p>
+            </div>
+
+            <div class="venue-gallery" style="margin: 2rem 0;">
+                <div class="gallery-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="gallery-item" style="position: relative; height: 300px; background: var(--color-surface); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: 0.9rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🏛️</div>
+                                <!-- <p>Main Hall</p>
+                                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Crystal Chandeliers & Grand Architecture</p> -->
+                                <img src="1.JPG" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" style="position: relative; height: 300px; background: var(--color-surface); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: 0.9rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🏛️</div>
+                                <!-- <p>Main Hall</p>
+                                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Crystal Chandeliers & Grand Architecture</p> -->
+                                <img src="2.JPG" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" style="position: relative; height: 300px; background: var(--color-surface); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: 0.9rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+                                <!-- <p>VIP Lounge</p>
+                                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Exclusive Networking Space</p> -->
+                                <img src="3.JPG" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" style="position: relative; height: 300px; background: var(--color-surface); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: 0.9rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+                                <!-- <p>VIP Lounge</p>
+                                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Exclusive Networking Space</p> -->
+                                <img src="4.JPG" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-full" style="position: relative; height: 250px; background: var(--color-surface); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 2rem;">
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: 0.9rem;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🎭</div>
+                            <p>Stage & Presentation Area</p>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">State-of-the-Art AV Equipment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="venue-details">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Venue Features</h3>
+                <div class="feature-grid" style="margin-top: 2rem;">
+                    <div style="background: var(--color-surface-light); padding: 1.5rem; border-radius: 12px;">
+                        <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">Capacity</h4>
+                        <p>100 VIP Guests</p>
+                    </div>
+                    <div style="background: var(--color-surface-light); padding: 1.5rem; border-radius: 12px;">
+                        <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">Features</h4>
+                        <p>Crystal Chandeliers & Multi-Level Design</p>
+                    </div>
+                    <div style="background: var(--color-surface-light); padding: 1.5rem; border-radius: 12px;">
+                        <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">Ambiance</h4>
+                        <p>State-of-the-Art Lighting & Sound</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Event Schedule -->
+    <div class="slide-container">
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="launch-title">EVENT DETAILS</h2>
+                <p class="tagline">An Evening Crafted for Excellence</p>
+            </div>
+
+            <div class="venue-details">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Schedule of Events</h3>
+                <p style="font-size: 1.1rem; color: var(--color-text-secondary); margin-bottom: 2rem;">
+                    Join us for a carefully curated evening that combines networking, innovation, and celebration.
+                </p>
+                
+                <div class="timeline" style="margin: 2rem 0;">
+                    <div class="timeline-item" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1.5rem; background: var(--color-surface-light); border-radius: 12px;">
+                        <div style="font-size: 2rem; margin-right: 1.5rem;">🕕</div>
+                        <div>
+                            <h4 style="color: var(--color-primary); margin-bottom: 0.3rem;">6:00 PM - VIP Reception</h4>
+                            <p style="color: var(--color-text-secondary); font-size: 0.9rem;">Welcome drinks and exclusive networking opportunity</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1.5rem; background: var(--color-surface-light); border-radius: 12px;">
+                        <div style="font-size: 2rem; margin-right: 1.5rem;">🕖</div>
+                        <div>
+                            <h4 style="color: var(--color-primary); margin-bottom: 0.3rem;">7:00 PM - Opening Keynote</h4>
+                            <p style="color: var(--color-text-secondary); font-size: 0.9rem;">Vision presentation and company journey</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1.5rem; background: var(--color-surface-light); border-radius: 12px;">
+                        <div style="font-size: 2rem; margin-right: 1.5rem;">🕗</div>
+                        <div>
+                            <h4 style="color: var(--color-primary); margin-bottom: 0.3rem;">8:00 PM - Product Unveiling</h4>
+                            <p style="color: var(--color-text-secondary); font-size: 0.9rem;">Live demonstration of The Nexus platform</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1.5rem; background: var(--color-surface-light); border-radius: 12px;">
+                        <div style="font-size: 2rem; margin-right: 1.5rem;">🕘</div>
+                        <div>
+                            <h4 style="color: var(--color-primary); margin-bottom: 0.3rem;">9:00 PM - Interactive Session</h4>
+                            <p style="color: var(--color-text-secondary); font-size: 0.9rem;">Q&A with leadership team</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" style="display: flex; align-items: center; padding: 1.5rem; background: var(--color-surface-light); border-radius: 12px;">
+                        <div style="font-size: 2rem; margin-right: 1.5rem;">🕙</div>
+                        <div>
+                            <h4 style="color: var(--color-primary); margin-bottom: 0.3rem;">10:00 PM - Celebration</h4>
+                            <p style="color: var(--color-text-secondary); font-size: 0.9rem;">Toast to the future of digital finance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="venue-details" style="text-align: center; background: var(--gradient-primary); color: var(--color-background);">
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Dress Code</h3>
+                <p style="font-size: 1.2rem; font-weight: 600;">All Black Smart Casual</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Call to Action -->
+    <div class="slide-container">
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="launch-title">BE PART OF THE FUTURE</h2>
+                <p class="tagline">Join the Digital Finance Revolution</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div style="text-align: center; margin: 3rem 0;">
+                <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--color-text);">
+                    The Nexus Awaits
+                </h3>
+                <p style="font-size: 1.2rem; color: var(--color-text-secondary); max-width: 800px; margin: 0 auto 3rem;">
+                    Be among the first to experience the convergence of web and mobile financial technology. 
+                    Witness the launch of a platform that will redefine how businesses and individuals 
+                    interact with money in the digital age.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="venue-details" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+                    <h3 class="feature-title">Launch Benefits</h3>
+                    <p class="feature-description">Exclusive early access and premium support for launch attendees</p>
+                </div>
+                <div class="venue-details" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                    <h3 class="feature-title">Our Mission</h3>
+                    <p class="feature-description">To provide a seamless payment service that empowers individuals and businesses to effortlessly process payment. We are committed to creating a world where payments are fast, easy, and affordable in the economy.</p>
+                </div>
+            </div>
+
+            <div class="venue-details" style="text-align: center; background: var(--gradient-primary); color: var(--color-background);">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">Save the Date</h3>
+                <p style="font-size: 1.3rem; font-weight: 600;">Friday, August 8th, 2025</p>
+                <p style="font-size: 1.1rem;">Imperial Hall • Evening Event • All Black Smart Casual</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const currentSlideSpan = document.getElementById('current-slide');
+        const totalSlidesSpan = document.getElementById('total-slides');
+        const progressBar = document.getElementById('progress-bar');
+        
+        let currentSlideIndex = 0;
+    
+        totalSlidesSpan.textContent = slides.length;
+    
+        function updateProgress() {
+            const progress = ((currentSlideIndex + 1) / slides.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+    
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            setTimeout(() => {
+                slides[index].classList.add('active');
+                currentSlideSpan.textContent = index + 1;
+                updateProgress();
+            }, 100);
+    
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+    
+            if (prevBtn && nextBtn) {
+                prevBtn.disabled = (index === 0);
+                nextBtn.disabled = (index === slides.length - 1);
+            }
+        }
+    
+        function createNavigation() {
+            const navContainer = document.createElement('div');
+            navContainer.classList.add('navigation');
+    
+            const prevBtn = document.createElement('button');
+            prevBtn.textContent = 'Previous';
+            prevBtn.id = 'prev-btn';
+            prevBtn.classList.add('nav-btn');
+            prevBtn.addEventListener('click', () => {
+                if (currentSlideIndex > 0) {
+                    currentSlideIndex--;
+                    showSlide(currentSlideIndex);
+                }
+            });
+    
+            const nextBtn = document.createElement('button');
+            nextBtn.textContent = 'Next';
+            nextBtn.id = 'next-btn';
+            nextBtn.classList.add('nav-btn');
+            nextBtn.addEventListener('click', () => {
+                if (currentSlideIndex < slides.length - 1) {
+                    currentSlideIndex++;
+                    showSlide(currentSlideIndex);
+                }
+            });
+    
+            prevBtn.disabled = true;
+    
+            navContainer.appendChild(prevBtn);
+            navContainer.appendChild(nextBtn);
+            document.body.appendChild(navContainer);
+        }
+    
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSlideIndex > 0) {
+                currentSlideIndex--;
+                showSlide(currentSlideIndex);
+            } else if (e.key === 'ArrowRight' && currentSlideIndex < slides.length - 1) {
+                currentSlideIndex++;
+                showSlide(currentSlideIndex);
+            }
+        });
+    
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+    
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+    
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+    
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50 && currentSlideIndex < slides.length - 1) {
+                currentSlideIndex++;
+                showSlide(currentSlideIndex);
+            }
+            if (touchEndX > touchStartX + 50 && currentSlideIndex > 0) {
+                currentSlideIndex--;
+                showSlide(currentSlideIndex);
+            }
+        }
+    
+        // Initialize everything when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            createNavigation();
+            updateProgress();
+        });
+    
+        // Auto-advance timer (optional - uncomment to enable)
+        /*
+        let autoAdvanceTimer;
+        const AUTO_ADVANCE_DELAY = 10000; // 10 seconds
+    
+        function startAutoAdvance() {
+            autoAdvanceTimer = setInterval(() => {
+                if (currentSlideIndex < slides.length - 1) {
+                    currentSlideIndex++;
+                    showSlide(currentSlideIndex);
+                } else {
+                    clearInterval(autoAdvanceTimer);
+                }
+            }, AUTO_ADVANCE_DELAY);
+        }
+    
+        function stopAutoAdvance() {
+            clearInterval(autoAdvanceTimer);
+        }
+    
+        // Stop auto-advance on user interaction
+        document.addEventListener('click', stopAutoAdvance);
+        document.addEventListener('keydown', stopAutoAdvance);
+        document.addEventListener('touchstart', stopAutoAdvance);
+        
+        // Uncomment to start auto-advance
+        // startAutoAdvance();
+        */
+    
+        // Preload animations
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
